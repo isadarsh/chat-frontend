@@ -31,7 +31,7 @@ const SignupPage = () => {
       await signup(formData);
     }
   };
-  return <div className="min-h-screen grid lg:grid-cols-2">
+  return (<div className="min-h-screen grid lg:grid-cols-2">
     {/* left side screen */}
     <div className="flex flex-col justify-center items-center p-6 sm:p-12">
       <div className="w-full max-w-md space-y-8">
@@ -142,6 +142,7 @@ const SignupPage = () => {
       subtitle="Connect, conversate and collaborate with others"
     />
   </div>
+  )
 }
 
 export default SignupPage
