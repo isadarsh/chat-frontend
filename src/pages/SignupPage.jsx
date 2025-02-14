@@ -3,6 +3,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import { Mail, MessageSquare, User, Lock, EyeOff, Eye, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
+import toast from "react-hot-toast";
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -11,18 +12,31 @@ const SignupPage = () => {
     email: "",
     password: "",
   });
-  const {signUp, isSigningUp} = useAuthStore();
+  const {signup, isSigningUp} = useAuthStore();
 
-  const validateForm = () => { };
+  const validateForm = () => {
+    if (!formData.name.trim()) return toast.error("Name is required");
+    if (!formData.email.trim()) return toast.error("Email is required");
+    if(!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
+    if (!formData.password.trim()) return toast.error("Password is required");
+    if (formData.password.length < 6) return toast.error("Password must be at least 6 characters");
+    
+    return true;
+  };
+
   const handleSubmit = async (e) => {
-    e.preventDefault();//to not refresh the page
+    e.preventDefault();//to prevent page refresh
+    const success = validateForm();
+    if (success === true) {
+      await signup(formData);
+    }
   };
   return <div className="min-h-screen grid lg:grid-cols-2">
     {/* left side screen */}
     <div className="flex flex-col justify-center items-center p-6 sm:p-12">
       <div className="w-full max-w-md space-y-8">
         {/* Logo */}
-        <div className="text-center mb-8">
+        <div className="text-center space-y-8">
           <div className="flex flex-col items-center gap-2 group">
             <div
               className="size-12 rounded-xl bg-primary/10 flex items-center justify-center 
@@ -126,7 +140,6 @@ const SignupPage = () => {
     <AuthImagePattern
       title="Join our Community"
       subtitle="Connect, conversate and collaborate with others"
-
     />
   </div>
 }
