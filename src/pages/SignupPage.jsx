@@ -7,11 +7,13 @@ import toast from "react-hot-toast";
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
+  
   const {signup, isSigningUp} = useAuthStore();
 
   const validateForm = () => {
@@ -19,7 +21,7 @@ const SignupPage = () => {
     if (!formData.email.trim()) return toast.error("Email is required");
     if(!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
     if (!formData.password.trim()) return toast.error("Password is required");
-    if (formData.password.length < 6) return toast.error("Password must be at least 6 characters");
+    // if (formData.password.length < 6) return toast.error("Password must be at least 6 characters");
     
     return true;
   };
@@ -31,6 +33,7 @@ const SignupPage = () => {
       await signup(formData);
     }
   };
+
   return (<div className="min-h-screen grid lg:grid-cols-2">
     {/* left side screen */}
     <div className="flex flex-col justify-center items-center p-6 sm:p-12">

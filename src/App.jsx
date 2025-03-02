@@ -30,7 +30,7 @@ export default function App() {
   }
 
   return (
-    <div>
+    <div data-theme="retro">
       <Navbar />
       <Routes>//auth-pages
         <Route path="/" element={authUser? <HomePage/>: <Navigate to="/login"/>} />
