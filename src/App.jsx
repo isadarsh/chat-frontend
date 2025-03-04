@@ -26,23 +26,25 @@ export default function App() {
   
   if (isCheckingAuth && !authUser) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center min-h-screen">
         <Loader className="size-10 animate-spin"/>
       </div>
     )
   }
 
   return (
-    <div data-theme={theme}>
+    <div className="flex flex-col min-h-screen" data-theme={theme}>
       <Navbar />
-      <Routes>//auth-pages
-        <Route path="/" element={authUser? <HomePage/>: <Navigate to="/login"/>} />
-        <Route path="/signup" element={!authUser?<SignupPage/>: <Navigate to="/"/>} />
-        <Route path="/login" element={!authUser? <LoginPage />: <Navigate to="/" />} />
-        <Route path="/logout" element={<LogoutPage/>} />
-        <Route path="/settings" element={<SettingsPage/>} />
-        <Route path="/profile" element={authUser? <ProfilePage/>: <Navigate to="/login/"/>} />
-      </Routes>
+      {/* <main className="flex-grow"> */}
+        <Routes>
+          <Route path="/" element={authUser? <HomePage/>: <Navigate to="/login"/>} />
+          <Route path="/signup" element={!authUser?<SignupPage/>: <Navigate to="/"/>} />
+          <Route path="/login" element={!authUser? <LoginPage />: <Navigate to="/" />} />
+          <Route path="/logout" element={<LogoutPage/>} />
+          <Route path="/settings" element={<SettingsPage/>} />
+          <Route path="/profile" element={authUser? <ProfilePage/>: <Navigate to="/login/"/>} />
+        </Routes>
+      {/* </main> */}
       <Toaster/>
     </div>
   )
